@@ -54,7 +54,7 @@ class Employers:
         """)
 
         for employer in employers:
-            if int(employer['open_vacancies']) > 0:
+            if int(employer['open_vacancies']) > 5:
                 cur.execute(
                     f"insert into employers values(%s, %s, %s)", [
                         employer["id"],
@@ -68,3 +68,6 @@ class Employers:
         # Закрытие коннекта
         cur.close()
         conn.close()
+
+
+Employers.make_table()
