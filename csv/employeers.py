@@ -68,6 +68,3 @@ class Employers:
         # Закрытие коннекта
         cur.close()
         conn.close()
-
-
-
