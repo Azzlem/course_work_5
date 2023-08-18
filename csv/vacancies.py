@@ -2,6 +2,7 @@ import psycopg2
 import requests
 
 
+# Класс получения вакансий по заранее подготовленным работодателям у которых есть открытые вакансии и их больше 5
 class Vacancies:
     @classmethod
     def get_id_emloyers(cls):
@@ -95,5 +96,3 @@ class Vacancies:
         # Закрытие коннекта
         cur.close()
         conn.close()
-
-

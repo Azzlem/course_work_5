@@ -1,3 +1,4 @@
+# Imports
 from csv.employeers import Employers
 from csv.vacancies import Vacancies
 from csv.utils import drop_table, LaconicOutputToUser
@@ -7,6 +8,7 @@ Employers.make_table()
 Vacancies.make_table()
 print("Bases successfully makes")
 
+# Working cycle
 while True:
     print(f"Нажмите 1 если вы хотите получить список всех компаний и количество вакансий у них.\n"
           f"Нажмите 2 если вы хотите получить список всех вакансий. \n"
@@ -31,5 +33,5 @@ while True:
     else:
         print("Что то пошло не так, введите ещё раз ваш выбор.")
 
-
+# delete database tables
 drop_table()

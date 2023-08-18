@@ -1,11 +1,8 @@
-import pprint
-
 import psycopg2
-import json
 
 
+# Database query class
 class DBManager:
-    # создание коннекта
     @staticmethod
     def get_companies_and_vacancies_count():
         conn = psycopg2.connect(
@@ -107,6 +104,3 @@ class DBManager:
         cur.close()
         conn.close()
         return temp
-
-
-

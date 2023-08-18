@@ -1,7 +1,9 @@
+# imports
 import psycopg2
 from csv.dbmanager import DBManager
 
 
+# Function to delete database tables
 def drop_table():
     conn = psycopg2.connect(
         host="localhost",
@@ -22,6 +24,7 @@ def drop_table():
     conn.close()
 
 
+# Class of concise and beautiful information output to the user in the console
 class LaconicOutputToUser:
     @staticmethod
     def laconic_avg():
