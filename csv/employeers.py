@@ -46,7 +46,7 @@ class Employers:
         cur.execute("""
             create table employers
             (
-            employers_id int,
+            employer_id int primary key,
             name varchar(200),
             url varchar(200)
             )
@@ -70,4 +70,4 @@ class Employers:
         conn.close()
 
 
-Employers.make_table()
+

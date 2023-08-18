@@ -15,7 +15,7 @@ class Vacancies:
         cur = conn.cursor()
 
         cur.execute("""
-        select employers_id from employers
+        select employer_id from employers
         """)
         temp = [el[0] for el in cur]
 
@@ -68,19 +68,22 @@ class Vacancies:
         cur.execute("""
                 create table vacancies
                 (
-                employers_id int,
+                vacancie_id int primary key,
                 name varchar(200),
-                url varchar(200)
+                url varchar(200),
+                employer_id int,
+                foreign key (employer_id) references employers (employer_id)                
                 )
 
             """)
 
         for vacancie in vacancies:
             cur.execute(
-                f"insert into vacancies values(%s, %s, %s)", [
+                f"insert into vacancies values(%s, %s, %s, %s)", [
                     vacancie["id"],
                     vacancie["name"],
-                    vacancie["alternate_url"]
+                    vacancie["alternate_url"],
+                    vacancie["employer"]["id"]
                 ]
             )
 
@@ -92,4 +95,6 @@ class Vacancies:
         conn.close()
 
 
-Vacancies.make_table()
+
+
+
