@@ -1,11 +1,10 @@
-from csv.dbmanager import DBManager
 from csv.employeers import Employers
 from csv.vacancies import Vacancies
 from csv.utils import drop_table, LaconicOutputToUser
 
 print("Please Wait")
-# Employers.make_table()
-# Vacancies.make_table()
+Employers.make_table()
+Vacancies.make_table()
 print("Bases successfully makes")
 
 while True:
@@ -33,4 +32,4 @@ while True:
         print("Что то пошло не так, введите ещё раз ваш выбор.")
 
 
-
+drop_table()
