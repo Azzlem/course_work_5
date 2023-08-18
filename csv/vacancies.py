@@ -72,6 +72,7 @@ class Vacancies:
                 name varchar(200),
                 url varchar(200),
                 employer_id int,
+                salary int,
                 foreign key (employer_id) references employers (employer_id)                
                 )
 
@@ -79,11 +80,12 @@ class Vacancies:
 
         for vacancie in vacancies:
             cur.execute(
-                f"insert into vacancies values(%s, %s, %s, %s)", [
+                f"insert into vacancies values(%s, %s, %s, %s, %s)", [
                     vacancie["id"],
                     vacancie["name"],
                     vacancie["alternate_url"],
-                    vacancie["employer"]["id"]
+                    vacancie["employer"]["id"],
+                    vacancie["salary"]["from"] if isinstance(vacancie["salary"], dict) else None
                 ]
             )
 
@@ -93,8 +95,5 @@ class Vacancies:
         # Закрытие коннекта
         cur.close()
         conn.close()
-
-
-
 
 
