@@ -5,24 +5,13 @@ import requests
 # Класс получения вакансий по заранее подготовленным работодателям у которых есть открытые вакансии и их больше 5
 class Vacancies:
     @classmethod
-    def get_id_emloyers(cls):
-        # создание коннекта
-        conn = psycopg2.connect(
-            host="localhost",
-            database="north",
-            user="abc",
-            password="abc"
-        )
-        cur = conn.cursor()
+    def get_id_emloyers(cls, cur):
 
         cur.execute("""
         select employer_id from employers
         """)
         temp = [el[0] for el in cur]
 
-        # Закрытие коннекта
-        cur.close()
-        conn.close()
         return temp
 
     @classmethod
@@ -41,11 +30,11 @@ class Vacancies:
         return req.json()['items'] if "items" in req.json().keys() else []
 
     @classmethod
-    def page_to_list(cls):
+    def page_to_list(cls, cur):
         """
         Цикл из доступных id работодателей на HH
         """
-        employers_id = Vacancies.get_id_emloyers()
+        employers_id = Vacancies.get_id_emloyers(cur)
         temp = []
         for employer_id in employers_id:
             list_page = Vacancies.get_vacancies(employer_id)
@@ -54,17 +43,8 @@ class Vacancies:
         return temp
 
     @classmethod
-    def make_table(cls):
-        vacancies = sum([value for value in Vacancies.page_to_list() if value], [])
-
-        # создание коннекта
-        conn = psycopg2.connect(
-            host="localhost",
-            database="north",
-            user="abc",
-            password="abc"
-        )
-        cur = conn.cursor()
+    def make_table(cls, cur, conn):
+        vacancies = sum([value for value in Vacancies.page_to_list(cur) if value], [])
 
         cur.execute("""
                 create table vacancies
@@ -93,6 +73,4 @@ class Vacancies:
         # запись в бд
         conn.commit()
 
-        # Закрытие коннекта
-        cur.close()
-        conn.close()
+

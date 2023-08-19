@@ -31,17 +31,8 @@ class Employers:
         return temp
 
     @classmethod
-    def make_table(cls):
+    def make_table(cls, cur, conn):
         employers = sum(Employers.page_to_list(), [])
-
-        # создание коннекта
-        conn = psycopg2.connect(
-            host="localhost",
-            database="north",
-            user="abc",
-            password="abc"
-        )
-        cur = conn.cursor()
 
         cur.execute("""
             create table employers
@@ -65,6 +56,3 @@ class Employers:
         # запись в бд
         conn.commit()
 
-        # Закрытие коннекта
-        cur.close()
-        conn.close()

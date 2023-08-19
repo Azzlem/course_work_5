@@ -4,15 +4,7 @@ from csv.dbmanager import DBManager
 
 
 # Function to delete database tables
-def drop_table():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="north",
-        user="abc",
-        password="abc"
-    )
-    cur = conn.cursor()
-
+def drop_table(cur, conn):
     cur.execute("""
     DROP TABLE  IF EXISTS  vacancies CASCADE;
     DROP TABLE  IF EXISTS  employers CASCADE;
@@ -27,21 +19,21 @@ def drop_table():
 # Class of concise and beautiful information output to the user in the console
 class LaconicOutputToUser:
     @staticmethod
-    def laconic_avg():
-        temp = DBManager.get_avg_salary()
+    def laconic_avg(cur):
+        temp = DBManager.get_avg_salary(cur)
         return f"Средняя зарплата всех вакансий {round(temp, 0)} рублей.\n"
 
     @staticmethod
-    def laconic_companies_and_vacancies_count():
-        temp = DBManager.get_companies_and_vacancies_count()
+    def laconic_companies_and_vacancies_count(cur):
+        temp = DBManager.get_companies_and_vacancies_count(cur)
         total = ""
         for el in temp:
             total += f"{el[0]}, {el[1]} вакансий.\n"
         return total
 
     @staticmethod
-    def laconic_all_vacancies():
-        temp = DBManager.get_all_vacancies()
+    def laconic_all_vacancies(cur):
+        temp = DBManager.get_all_vacancies(cur)
         total = ""
         for el in temp:
             if el[2] is None:
@@ -51,8 +43,8 @@ class LaconicOutputToUser:
         return total
 
     @staticmethod
-    def laconic_vacancies_with_higher_salary():
-        temp = DBManager.get_vacancies_with_higher_salary()
+    def laconic_vacancies_with_higher_salary(cur):
+        temp = DBManager.get_vacancies_with_higher_salary(cur)
         total = ""
         for el in temp:
             if el[4] is None:
@@ -62,8 +54,8 @@ class LaconicOutputToUser:
         return total
 
     @staticmethod
-    def laconic_get_vacancies_with_keyword():
-        temp = DBManager.get_vacancies_with_keyword(input("Введите слово для поиска: ").capitalize())
+    def laconic_get_vacancies_with_keyword(cur):
+        temp = DBManager.get_vacancies_with_keyword(input("Введите слово для поиска: ").capitalize(), cur)
         total = ""
         for el in temp:
             if el[4] is None:
